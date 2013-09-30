@@ -10,10 +10,10 @@
 <body>
 	<div>
 		<div>
-			<%@ include file="header.jsp"%>
+		<!-- 	<%@ include file="header.jsp"%>  -->
 		</div>
 		<div id="conteiner">
-		
+		hello!
 		</div>
 		<div>
 			<%@ include file="footer.jsp"%>
