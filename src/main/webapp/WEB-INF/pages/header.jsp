@@ -11,7 +11,6 @@
 	rel="stylesheet" />
 <title>Insert title here</title>
 </head>
-
 <body>
 	<div id="header">
 		<img src="<s:url value="/resources/img/logotip.png"/>" />
@@ -24,7 +23,7 @@
 		<div id="tabs">
 			<ul>
 				<c:forEach var="category" items="${categorysList}">
-					<li><a href="ctegory=${category.id}"><span>${category.name}</span></a></li>
+					<li><a href="category?ctegory=${category.id}"><span>${category.name}</span></a></li>
 				</c:forEach>
 			</ul>
 		</div>
