@@ -13,13 +13,13 @@ public class SignupValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		SignupForm signupForm = (SignupForm) target;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.empty", "Username must not be empty.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "Login must not be empty.");
 		String username = signupForm.getName();
 		if ((username.length()) > 16) {
-			errors.rejectValue("username", "username.tooLong", "Username must not more than 16 characters.");
+			errors.rejectValue("login", "login.tooLong", "Login must not more than 16 characters.");
 		}
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.empty", "Password must not be empty.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pass", "pass.empty", "Password must not be empty.");
 		if (!(signupForm.getPass()).equals(signupForm
 				.getConfirmPass())) {
 			errors.rejectValue("confirmPassword", "confirmPassword.passwordDontMatch", "Passwords don't match.");

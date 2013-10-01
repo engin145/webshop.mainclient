@@ -11,10 +11,10 @@ public class RigistrationServlet {
 		return "signin";
 	}
 
-	@RequestMapping("/signup")
-	public String signUp() {
-		return "signup";
-	}
+//	@RequestMapping("/signup")
+//	public String signUp() {
+//		return "signup";
+//	}
 
 	@RequestMapping("/forgotpass")
 	public String forgotPass() {

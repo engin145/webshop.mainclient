@@ -36,8 +36,7 @@ span.error {
 			<tr>
 				<td>Pass confirm:</td>
 				<td><form:password path="confirmPass" /></td>
-				<td><span class="error"><form:errors
-							path="confirmPass" /></span></td>
+				<td><span class="error"><form:errors path="confirmPass" /></span></td>
 			</tr>
 			<tr>
 				<td>e-mail:</td>
@@ -50,11 +49,13 @@ span.error {
 				<td><span class="error"><form:errors path="phone" /></span></td>
 			</tr>
 			<tr>
-				<td colspan="3" align="right"><input type="submit"
-					value="Sign up" /></td>
+				<td></td>
+				<td align="right"><input type="submit" value="Sign up" /></td>
+				<td></td>
 			</tr>
+
 		</table>
 	</form:form>
-	
+
 </body>
 </html>
