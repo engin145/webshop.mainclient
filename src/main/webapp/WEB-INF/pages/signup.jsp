@@ -15,6 +15,19 @@ span.error {
 </style>
 </head>
 <body>
+
+	<!--
+	function f_pres() {
+		if (true) {
+			
+			document.write("Выполнился if");
+		}
+		else {
+			document.write("Выполнился else");
+		}
+	//-->
+
+
 	<h1>Sign Up</h1>
 	<form:form method="post" commandName="signupForm">
 		<table border="0">
@@ -50,7 +63,7 @@ span.error {
 			</tr>
 			<tr>
 				<td></td>
-				<td align="right"><input type="submit" value="Sign up" /></td>
+				<td align="right"><input type="submit" value= "Sign up" /></td>
 				<td></td>
 			</tr>
 
