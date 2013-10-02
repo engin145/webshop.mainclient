@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.algo.webshop.common.domain.Category;
@@ -52,10 +54,13 @@ public class DispatcherServlet {
 		return new ModelAndView("index");
 	}
 	
-	/*@RequestMapping("/header")
-	public ModelAndView header(Model model) {
+	@RequestMapping(value = "/category", method = RequestMethod.GET)
+	public ModelAndView categorys(Model model, @RequestParam("category") int categoryId) {
+		List<Good> goods = serviceGood.getGoods(categoryId);
 		List<Category> categorysList = serviceCategory.getCategorys();
 		model.addAttribute("categorysList", categorysList);
-		return new ModelAndView("header");
-	}*/
+		model.addAttribute("goodList", goods);
+		model.addAttribute("id", categoryId);
+		return new ModelAndView("category");
+	}
 }

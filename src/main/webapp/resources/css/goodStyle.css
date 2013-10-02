@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+
+#wreaper {
+	width: 1000px;
+	margin: auto;
+	border: 1px solid #000;
+	background-color: #EFEFEF;
+}
+
+#header {
+	height: 180px;
+}
+
+.good {
+	padding: 10px;
+	border: 1px solid #000;
+	width: 960px;
+	height: 160px;
+	margin: 10px;
+	background-color: #FFFFFF;
+}
+
+.photo {
+	height: 150px;
+	width: 150px;
+}
+
+.title {
+	margin-left: 200px;
+	position: relative;
+	top: -150px;
+	font-size: 18px;
+	font-weight: 400;
+	font-family: Arial, "Helvetica CY", "Nimbus Sans L", Tahoma;
+	color: #232323;
+}
+
+.byNow {
+	position: relative;
+	margin-left: 200px;
+	top: -140px;
+}
+
+a img {
+	border: none; /* Убираем рамку */
+}
+
+.price {
+	color: red;
+	font-size: 22px;
+	position: relative;
+	top: -13px;
+	margin-left: 30px;
+}
+
+.description {
+	position: relative;
+	margin-left: 200px;
+	top: -130px;
+	color: #686868;
+}
+
+.code {
+	position: relative;
+	margin-left: 200px;
+	top: -110px;
+	color: #686868;
+}
+
+.isAvailable {
+	color: #686868;
+	position: relative;
+	top: -13px;
+	margin-left: 30px;
+}
