@@ -15,7 +15,7 @@
 	<div id="header">
 		<img src="<s:url value="/resources/img/logotip.png"/>" />
 		<p id="signIn">
-			<a href="#">Sign In</a>
+			<a href="signin">Sign In</a>
 		</p>
 		<p id="Basket">
 			<a href="#">Basket</a>

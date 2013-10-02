@@ -17,21 +17,28 @@ import com.algo.webshop.common.domain.Category;
 import com.algo.webshop.common.domain.Good;
 import com.algo.webshop.common.domainimpl.ICategory;
 import com.algo.webshop.common.domainimpl.IGood;
+import com.algo.webshop.common.domainimpl.IPrice;
 
 @Controller
 public class DispatcherServlet {
-	
+
 	private ICategory serviceCategory;
 	private IGood serviceGood;
-	
+	private IPrice servicePrice;
+
 	@Autowired
 	public void setUserService(@Qualifier("goodService") IGood service) {
 		this.serviceGood = service;
 	}
-	
+
 	@Autowired
 	public void setUserService(@Qualifier("categoryService") ICategory service) {
 		this.serviceCategory = service;
+	}
+
+	@Autowired
+	public void setUserService(@Qualifier("priceService") IPrice service) {
+		this.servicePrice = service;
 	}
 
 	@RequestMapping({ "/", "/index" })
@@ -39,23 +46,25 @@ public class DispatcherServlet {
 		List<Category> categorysList = serviceCategory.getCategorys();
 		List<Good> goodListByOneCategory = new ArrayList<Good>();
 		Random randomValue = new Random();
-		
-		for(Category cat : categorysList){
+
+		for (Category cat : categorysList) {
 			List<Good> goodList = serviceGood.getGoods(cat.getId());
 			try {
-				goodListByOneCategory.add(goodList.get(randomValue.nextInt(goodList.size())));
+				goodListByOneCategory.add(goodList.get(randomValue
+						.nextInt(goodList.size())));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-				
+
 		}
 		model.addAttribute("goodList", goodListByOneCategory);
 		model.addAttribute("categorysList", categorysList);
 		return new ModelAndView("index");
 	}
-	
+
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
-	public ModelAndView categorys(Model model, @RequestParam("category") int categoryId) {
+	public ModelAndView categorys(Model model,
+			@RequestParam("category") int categoryId) {
 		List<Good> goods = serviceGood.getGoods(categoryId);
 		List<Category> categorysList = serviceCategory.getCategorys();
 		model.addAttribute("categorysList", categorysList);
