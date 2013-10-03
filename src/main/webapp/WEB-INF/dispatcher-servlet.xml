@@ -15,7 +15,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 	<context:annotation-config />
 	<context:component-scan base-package="com.algo.webshop.client.controller" />
 	<mvc:annotation-driven />
-	<mvc:resources mapping="/resources/**" location="/resources/"/>
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -50,5 +50,12 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 		<property name="serviceUrl"
 			value="http://127.0.0.1:8081/webshop.server-1.0/remoting/CategoryService" />
 		<property name="serviceInterface" value="com.algo.webshop.common.domainimpl.ICategory" />
+	</bean>
+	
+	<bean id="priceService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceUrl"
+			value="http://127.0.0.1:8081/webshop.server-1.0/remoting/PriceService" />
+		<property name="serviceInterface" value="com.algo.webshop.common.domainimpl.IPrice" />
 	</bean>
 </beans>

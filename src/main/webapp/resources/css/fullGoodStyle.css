@@ -1,0 +1,79 @@
+#wreaper {
+	width: 1000px;
+	margin: auto;
+	border: 1px solid #000;
+	background-color: #EFEFEF;
+}
+
+#header {
+	height: 180px;
+}
+
+#good {
+	height:500px;
+	padding: 10px;
+	border: 1px solid #000;
+	width: 960px;
+	margin: 10px;
+	background-color: #FFFFFF;
+}
+
+#photo {
+	width:300px;
+	height:300px;
+	border:1px solid red;
+	margin-top: 15px;
+}
+
+#title {
+	margin-left: 350px;
+	position: relative;
+	top: -290px;
+	font-size: 18px;
+	font-weight: 400;
+	font-family: Arial, "Helvetica CY", "Nimbus Sans L", Tahoma;
+	color: #232323;
+}
+
+#byNow {
+	position: relative;
+	margin-left: 340px;
+	top: -275px;
+}
+
+a img {
+	border: none; /* Убираем рамку */
+}
+
+#price {
+	color: red;
+	font-size: 22px;
+	position: relative;
+	top: -13px;
+	margin-left: 30px;
+}
+
+#isAvailable {
+	color: #686868;
+	position: relative;
+	top: -13px;
+	margin-left: 30px;
+}
+
+#longDes {
+	color: #686868;
+	font-size:24px;
+}
+
+#description {
+	position: relative;
+	margin-left: 340px;
+	top: -275px;
+}
+
+#code {
+	color: #686868;
+	position: relative;
+	top: -13px;
+	margin-left: 30px;
+}

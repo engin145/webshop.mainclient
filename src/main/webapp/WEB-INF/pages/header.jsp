@@ -23,7 +23,7 @@
 		<div id="tabs">
 			<ul>
 				<c:forEach var="category" items="${categorysList}">
-					<li><a href="category?ctegory=${category.id}"><span>${category.name}</span></a></li>
+					<li><a href="category?category=${category.id}" <c:if test="${id==category.id}"><c:out value="id=current"></c:out></c:if> ><span>${category.name}</span></a></li>
 				</c:forEach>
 			</ul>
 		</div>
