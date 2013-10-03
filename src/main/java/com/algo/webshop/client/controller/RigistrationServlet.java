@@ -6,6 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.algo.webshop.client.authentication.SignupForm;
 import com.algo.webshop.client.authentication.SignupValidator;
@@ -16,6 +18,16 @@ public class RigistrationServlet {
 	@RequestMapping("/signin")
 	public String signIn() {
 		return "signin";
+	}
+	
+	@RequestMapping(value = "/inputLog", method = RequestMethod.POST)
+	public @ResponseBody String respInputLog(@RequestParam String log, String pass) {
+		return (log+pass);
+	}
+	
+	@RequestMapping("/signinDesign")
+	public String signInDesign() {
+		return "return text";
 	}
 
 	@Autowired

@@ -5,25 +5,52 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script type="text/JavaScript"
+ src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js">
+</script>
+
+<script type="text/javascript">
+<!--
+	
+	function send() {
+		var login = $("#text").val();
+		var pass = $("#pass").val();
+		$.ajax({
+			type : 'POST',
+			url : '/inputLog',
+			dataType: 'json',
+			contentType: 'application/json',
+		    mimeType: 'application/json',
+		    data : ({
+				text: login,
+				text: pass
+			}),
+			success: function (textBack) {
+				$("#login_mes").text(textBack);
+			}
+		});
+	}
+//-->
+</script>
 </head>
 <body>
 	<div>
-		<form action="signin" method="post">
-			<table border="0">
-				<tr>
-					<td>Login:</td>
-					<td><input type="text" name="login" /></td>
-				</tr>
-				<tr>
-					<td>Pass:</td>
-					<td><input type="password" name="pass" /></td>
-				</tr>
-				<tr>
-					<td align="right" colspan="2"><input type="submit"
-						value="Login" /></td>
-				</tr>
-			</table>
-		</form>
+		<table border="0">
+			<tr>
+				<td>Login:</td>
+				<td><input type="text" id="login" /></td>
+				<td id="login_mes"></td>
+			</tr>
+			<tr>
+				<td>Pass:</td>
+				<td><input type="password" id="pass" /></td>
+				<td id="pass_mes"></td>
+			</tr>
+			<tr>
+				<td align="right" colspan="2"><input type="button"
+					onclick="send();" value="Login" /></td>
+			</tr>
+		</table>
 		<p>
 			<a href="forgotpass">Forgot your password</a>
 		</p>
@@ -34,3 +61,4 @@
 	</div>
 </body>
 </html>
+
