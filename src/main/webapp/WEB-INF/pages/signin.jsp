@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
 <script type="text/JavaScript"
  src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js">
 </script>
@@ -13,20 +14,19 @@
 <!--
 	
 	function send() {
-		var login = $("#text").val();
+		var login = $("#login").val();
 		var pass = $("#pass").val();
 		$.ajax({
 			type : 'POST',
-			url : '/inputLog',
+			url : 'inputLog',
 			dataType: 'json',
 			contentType: 'application/json',
 		    mimeType: 'application/json',
 		    data : ({
-				text: login,
-				text: pass
+				text: login
 			}),
-			success: function (textBack) {
-				$("#login_mes").text(textBack);
+			success: function (data) {
+				$("#login_mes").text("textBack");
 			}
 		});
 	}

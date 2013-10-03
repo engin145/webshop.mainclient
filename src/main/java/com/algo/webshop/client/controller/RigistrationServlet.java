@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.algo.webshop.client.authentication.Response;
 import com.algo.webshop.client.authentication.SignupForm;
 import com.algo.webshop.client.authentication.SignupValidator;
 
@@ -21,8 +22,12 @@ public class RigistrationServlet {
 	}
 	
 	@RequestMapping(value = "/inputLog", method = RequestMethod.POST)
-	public @ResponseBody String respInputLog(@RequestParam String log, String pass) {
-		return (log+pass);
+	public @ResponseBody Response respInputLog(@RequestParam String log) {
+		Response result = new Response();
+		result.setLogin("Teyur");
+		result.setPass("hjkfsdhk");
+		
+		return result;
 	}
 	
 	@RequestMapping("/signinDesign")
