@@ -24,7 +24,7 @@
 					<div class="byNow">
 						<a href="#"><img
 							src="<s:url value="/resources/img/basket.jpg"/>" border="0"></a><span
-							class="price">${priceMap[good.id]}</span><span class="isAvailable"><c:choose>
+							class="price">${priceMap[good.id]} грн</span><span class="isAvailable"><c:choose>
 								<c:when test="${good.amount>0}">
 									<c:out value="<img src=${pageContext.request.contextPath}/resources/img/tick.png> Есть в наличии" escapeXml="false"></c:out>
 								</c:when>

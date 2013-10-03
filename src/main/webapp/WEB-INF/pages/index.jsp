@@ -25,7 +25,7 @@
 						<a href="#">
 						<img src="<s:url value="/resources/img/basket.jpg"/>" border="0"/></a>
 						<span class="price">
-							${priceMap[good.id]}
+							${priceMap[good.id]} грн
 						</span><span class="isAvailable">
 							<c:choose>
 								<c:when test="${good.amount>0}">
