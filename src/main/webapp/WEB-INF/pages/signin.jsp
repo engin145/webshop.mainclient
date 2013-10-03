@@ -17,7 +17,7 @@
 		var login = $("#login").val();
 		var pass = $("#pass").val();
 		$.ajax({
-			type : 'POST',
+			type : 'GET',
 			url : 'inputLog',
 			dataType: 'json',
 			contentType: 'application/json',
@@ -26,7 +26,7 @@
 				text: login
 			}),
 			success: function (data) {
-				$("#login_mes").text("textBack");
+				$("#login_mes").text(data.login);
 			}
 		});
 	}

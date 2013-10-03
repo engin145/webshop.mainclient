@@ -33,10 +33,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 			value="http://127.0.0.1:8081/webshop.server-1.0/remoting/UserService" />
 		<property name="serviceInterface" value="com.algo.webshop.common.domainimpl.IUser" />
 	</bean>
-	
-	<bean id="signupValidator"
-		class="com.algo.webshop.client.authentication.SignupValidator">
-	</bean>
 
 	<bean id="goodService"
 		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
