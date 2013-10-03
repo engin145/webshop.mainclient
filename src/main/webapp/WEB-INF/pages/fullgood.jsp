@@ -9,10 +9,6 @@
 <title>Full good</title>
 </head>
 <body>
-	<c:forEach var="good" items="${listGood}">
-		  ${good.id}
-		  ${good.name}
-		  ${good.category_id}
-	 </c:forEach>
+	
 </body>
 </html>

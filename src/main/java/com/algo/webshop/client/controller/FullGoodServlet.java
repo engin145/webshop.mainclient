@@ -1,27 +1,25 @@
 package com.algo.webshop.client.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.algo.webshop.common.domain.Category;
 import com.algo.webshop.common.domain.Good;
-import com.algo.webshop.common.domainimpl.ICategory;
+import com.algo.webshop.common.domain.Price;
 import com.algo.webshop.common.domainimpl.IGood;
+import com.algo.webshop.common.domainimpl.IPrice;
 
 @Controller
 public class FullGoodServlet {
 	
-	private ICategory serviceCategory;
 	private IGood serviceGood;
+	private IPrice servicePrice;
 	
 	@Autowired
 	public void setUserService(@Qualifier("goodService") IGood service) {
@@ -29,20 +27,17 @@ public class FullGoodServlet {
 	}
 	
 	@Autowired
-	public void setUserService(@Qualifier("categoryService") ICategory service) {
-		this.serviceCategory = service;
+	public void setUserService(@Qualifier("priceService") IPrice service) {
+		this.servicePrice = service;
 	}
 
-	@RequestMapping("/fullgood")
-	public ModelAndView header(Model model,@PathVariable Integer category_id) { 
-		List<Good> listGood = serviceGood.getGoods(category_id);
-		List<Category> listCategory = serviceCategory.getCategorys();
-		Map<Integer,Category> mapCategory = new HashMap<Integer,Category>();
-		for (Category category : listCategory) {
-			mapCategory.put(category.getId(), category);
-		}
-		model.addAttribute(listGood);
-		model.addAttribute(mapCategory);
-		return new ModelAndView("foolgood");
+	@RequestMapping(value="/fullgood", method=RequestMethod.GET)
+	public ModelAndView header(Model model,@RequestParam("good") int goodId) { 
+		Good good = serviceGood.getGood(goodId);
+		Price price = servicePrice.getMaxDatePriceByOneGood(goodId);
+		model.addAttribute(good);
+		model.addAttribute(price);
+		
+		return new ModelAndView("fullgood");
 	}
 }

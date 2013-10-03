@@ -76,6 +76,15 @@ hr {
 	background-position: 100% -42px;
 }
 
+#tabs a.current {
+	
+	background-position: 0% -42px;
+}
+#tabs a.current span{
+	
+	background-position: 100% -42px;
+}
+
 #signIn {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 22px;
