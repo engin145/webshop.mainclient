@@ -1,16 +1,5 @@
-#wreaper {
-	width: 1000px;
-	margin: auto;
-	border: 1px solid #000;
-	background-color: #EFEFEF;
-}
-
-#header {
-	height: 180px;
-}
-
 #good {
-	height:500px;
+	height: 500px;
 	padding: 10px;
 	border: 1px solid #000;
 	width: 960px;
@@ -19,9 +8,9 @@
 }
 
 #photo {
-	width:300px;
-	height:300px;
-	border:1px solid red;
+	width: 300px;
+	height: 300px;
+	border: 1px solid red;
 	margin-top: 15px;
 }
 
@@ -62,7 +51,7 @@ a img {
 
 #longDes {
 	color: #686868;
-	font-size:24px;
+	font-size: 24px;
 }
 
 #description {

@@ -43,6 +43,7 @@ public class DispatcherServlet {
 	public void setUserService(@Qualifier("priceService") IPrice service) {
 		this.servicePrice = service;
 	}
+	
 
 	@RequestMapping({ "/", "/index" })
 	public ModelAndView index(Model model) {

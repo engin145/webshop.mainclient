@@ -1,9 +1,17 @@
 @CHARSET "UTF-8";
 
+#wreaper {
+	width: 1000px;
+	margin: auto;
+	border: 1px solid #000;
+	background-color: #EFEFEF;
+}
+
 #header {
 	width: 1000px;
 	margin: auto;
 	background-color: #EFEFEF;
+	height: 180px;
 }
 
 h1 {
@@ -77,11 +85,10 @@ hr {
 }
 
 #tabs a.current {
-	
 	background-position: 0% -42px;
 }
-#tabs a.current span{
-	
+
+#tabs a.current span {
 	background-position: 100% -42px;
 }
 

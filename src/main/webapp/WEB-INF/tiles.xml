@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+<tiles-definitions>
+	<definition name="baseLayout" template="/WEB-INF/pages/layout/layout.jsp">
+		<put-attribute name="title" value="Spring 3 MVC &amp; Apache Tiles 2" />
+		<put-attribute name="header" value="/WEB-INF/pages/layout/header.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/pages/layout/footer.jsp" />
+		<put-attribute name="style" value="goodStyle.css" />
+	</definition>
+
+	<definition name="index" extends="baseLayout">
+		<put-attribute name="title" value="Shop" />
+		<put-attribute name="content" value="/WEB-INF/pages/goods.jsp" />
+	</definition>
+	
+	<definition name="category" extends="baseLayout">
+		<put-attribute name="title" value="Categorys" />
+		<put-attribute name="content" value="/WEB-INF/pages/goods.jsp" />
+	</definition>
+	
+	<definition name="fullgood" extends="baseLayout">
+		<put-attribute name="title" value="FullGood" />
+		<put-attribute name="content" value="/WEB-INF/pages/fullgood.jsp" />
+		<put-attribute name="style" value="fullGoodStyle.css" />
+	</definition>
+</tiles-definitions>

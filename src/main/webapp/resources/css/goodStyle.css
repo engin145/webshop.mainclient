@@ -1,16 +1,5 @@
 @CHARSET "UTF-8";
 
-#wreaper {
-	width: 1000px;
-	margin: auto;
-	border: 1px solid #000;
-	background-color: #EFEFEF;
-}
-
-#header {
-	height: 180px;
-}
-
 .good {
 	padding: 10px;
 	border: 1px solid #000;
