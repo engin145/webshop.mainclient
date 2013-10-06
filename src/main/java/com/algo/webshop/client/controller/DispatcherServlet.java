@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.algo.webshop.client.authorization.SignupForm;
 import com.algo.webshop.common.domain.Category;
 import com.algo.webshop.common.domain.Good;
 import com.algo.webshop.common.domain.Price;
@@ -65,6 +66,7 @@ public class DispatcherServlet {
 		for (Price price : priceList) {
 			priceMap.put(price.getGoodId(), price.getValue());
 		}
+		model.addAttribute("signupForm", new SignupForm());
 		model.addAttribute("priceMap",priceMap);
 		model.addAttribute("goodList", goodListByOneCategory);
 		model.addAttribute("categorysList", categorysList);

@@ -53,5 +53,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 		</property>
 	</bean>
 
-	<bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver"/>
+	<bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver" />
+
 </beans>

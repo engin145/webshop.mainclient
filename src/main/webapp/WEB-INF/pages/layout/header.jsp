@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <div id="header">
 	<img src="<s:url value="/resources/img/logotip.png"/>" />
 	 <!-- Панель с кнопками -->
@@ -11,6 +13,7 @@
             </div>
 
         <!-- Форма №1 для модального окна -->
+        <form action="login" method="post">
         <a href="#x" class="overlay" id="login_form"></a>
         <div class="popup">
             <h2>Здравствуй, Гость!</h2>
@@ -23,39 +26,41 @@
                 <label for="password">Пароль</label>
                 <input type="password" id="password" value="" />
             </div>
-            <input type="button" value="Войти" />
+            <input type="submit" value="Войти" />
 
             <a class="close" href="#close"></a>
         </div>
+        </form>
 
         <!-- popup form #2 -->
+		<form:form action="login" method="post" modelAttribute="signupForm">
         <a href="#x" class="overlay" id="join_form"></a>
         <div class="popup">
             <h2>Регистрация</h2>
             <div>
-                <label for="email">Псевдоним</label>
-                <input type="text" id="email" value="" />
+            	<form:errors path="username" />
+                <form:label path="username">Псевдоним</form:label>
+                <form:input path="username" id="email" value="" />
             </div>
             <div>
-                <label for="pass">Пароль</label>
-                <input type="password" id="pass" value="" />
+                <form:label path="password">Пароль</form:label>
+                <form:input path="password" id="pass" value="" />
             </div>
             <div>
-                <label for="pass">Повторите пароль</label>
-                <input type="password" id="pass" value="" />
+                <form:label path="confirmPassword">Повторите пароль</form:label>
+                <form:input path="confirmPassword" id="pass" value="" />
             </div>
              <div>
-                <label for="firstname">Имя</label>
-                <input type="text" id="firstname" value="" />
+             	
+                <form:label path="email">Почта</form:label>
+                <form:input path="email" id="email" value="" />
             </div>
-            <div>
-                <label for="phone">Телефон</label>
-                <input type="text" id="lastname" value="" />
-            </div>
-            <input type="button" value="Регистрация" />&nbsp;&nbsp;&nbsp;или&nbsp;&nbsp;&nbsp;<a href="#login_form" id="login_pop">Войти</a>
+            
+            <input type="submit" value="Регистрация" />&nbsp;&nbsp;&nbsp;или&nbsp;&nbsp;&nbsp;<a href="#login_form" id="login_pop">Войти</a>
 
             <a class="close" href="#close"></a>
         </div>
+        </form:form>
 	<div id="tabs">
 		<ul>
 			<c:forEach var="category" items="${categorysList}">
