@@ -1,6 +1,5 @@
 package com.algo.webshop.client.authorization;
 
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;

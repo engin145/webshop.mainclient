@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.algo.webshop.client.authorization.SignupForm;
-import com.algo.webshop.common.domainimpl.IGood;
-import com.algo.webshop.common.domainimpl.IPrice;
 import com.algo.webshop.common.domainimpl.IUser;
 
 @Controller

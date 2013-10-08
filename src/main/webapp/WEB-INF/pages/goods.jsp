@@ -1,6 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<script type="text/javascript">
+
+function getUrl(goodId) { 
+	var xmlhttp;
+	xmlhttp=new XMLHttpRequest();
+	xmlhttp.open("POST","putinbasket",true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("goodId="+goodId);
+}
+
+</script>
 <div id="content">
 	<c:forEach var="good" items="${goodList}">
 		<div class="good">
@@ -9,7 +20,7 @@
 				<a href="fullgood?good=${good.id}">${good.name}</a>
 			</div>
 			<div class="byNow">
-				<a href="#"> <img
+				<a href="#" onclick=getUrl(${good.id})> <img
 					src="<s:url value="/resources/img/basket.jpg"/>" border="0" /></a> <span
 					class="price"> ${priceMap[good.id]} грн </span><span
 					class="isAvailable"> <c:choose>
