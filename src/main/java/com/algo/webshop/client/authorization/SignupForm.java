@@ -1,30 +1,37 @@
 package com.algo.webshop.client.authorization;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class SignupForm {
-	@NotBlank
-	@Size(min=3, max=16, message="name must be not least 3 char")
-	private String username;
-	
-	@NotBlank
+	@Size(min = 3, max = 16, message = "name must be not least 3 char")
+	private String name;
+
+	@Size(min = 3, max = 16, message = "password must be not least 3 char")
 	private String password;
-	
-	@NotBlank
+
+	@Size(min = 3, max = 16, message = "login must be not least 3 char")
+	private String login;
+
+	@Size(min = 3, max = 16, message = "password must be not least 3 char")
 	private String confirmPassword;
-	
-	@Email
+
+	@Email(message="Your input not correct email")
+	@NotBlank(message="Your input not correct email")
 	private String email;
 
-	public String getUsername() {
-		return username;
+	@NotBlank
+	private String phone;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {
@@ -33,6 +40,14 @@ public class SignupForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getConfirmPassword() {
@@ -46,8 +61,16 @@ public class SignupForm {
 	public String getEmail() {
 		return email;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

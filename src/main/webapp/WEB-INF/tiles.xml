@@ -24,4 +24,10 @@
 		<put-attribute name="content" value="/WEB-INF/pages/fullgood.jsp" />
 		<put-attribute name="style" value="fullGoodStyle.css" />
 	</definition>
+	
+	<definition name="signup" extends="baseLayout">
+		<put-attribute name="title" value="Регистрация" />
+		<put-attribute name="content" value="/WEB-INF/pages/signup.jsp" />
+		<put-attribute name="style" value="signup.css" />
+	</definition>
 </tiles-definitions>

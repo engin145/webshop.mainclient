@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.algo.webshop.client.authorization.SignupForm;
 import com.algo.webshop.common.domain.Category;
 import com.algo.webshop.common.domain.Good;
 import com.algo.webshop.common.domain.Price;
@@ -44,21 +43,21 @@ public class DispatcherServlet {
 	public void setUserService(@Qualifier("priceService") IPrice service) {
 		this.servicePrice = service;
 	}
-	
 
 	@RequestMapping({ "/", "/index" })
 	public ModelAndView index(Model model) {
 		List<Category> categorysList = serviceCategory.getCategorys();
 		List<Good> goodListByOneCategory = new ArrayList<Good>();
 		List<Price> priceList = servicePrice.getMaxDateAllPrice();
-		Map<Integer,Float> priceMap = new HashMap<Integer,Float>();
-		
+		Map<Integer, Float> priceMap = new HashMap<Integer, Float>();
+
 		Random randomValue = new Random();
 
 		for (Category cat : categorysList) {
 			List<Good> goodList = serviceGood.getGoods(cat.getId());
 			try {
-				goodListByOneCategory.add(goodList.get(randomValue.nextInt(goodList.size())));
+				goodListByOneCategory.add(goodList.get(randomValue
+						.nextInt(goodList.size())));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -66,26 +65,27 @@ public class DispatcherServlet {
 		for (Price price : priceList) {
 			priceMap.put(price.getGoodId(), price.getValue());
 		}
-		model.addAttribute("signupForm", new SignupForm());
-		model.addAttribute("priceMap",priceMap);
+		model.addAttribute("priceMap", priceMap);
 		model.addAttribute("goodList", goodListByOneCategory);
 		model.addAttribute("categorysList", categorysList);
 		return new ModelAndView("index");
 	}
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
-	public ModelAndView categorys(Model model, @RequestParam("category") int categoryId) {
+	public ModelAndView categorys(Model model,
+			@RequestParam("category") int categoryId) {
 		List<Good> goods = serviceGood.getGoods(categoryId);
 		List<Category> categorysList = serviceCategory.getCategorys();
-		List<Price> priceList = servicePrice.getMaxDatePriceByOneCategory(categoryId);
-		Map<Integer,Float> priceMap = new HashMap<Integer,Float>();
+		List<Price> priceList = servicePrice
+				.getMaxDatePriceByOneCategory(categoryId);
+		Map<Integer, Float> priceMap = new HashMap<Integer, Float>();
 		for (Price price : priceList) {
 			priceMap.put(price.getGoodId(), price.getValue());
 		}
 		model.addAttribute("categorysList", categorysList);
 		model.addAttribute("goodList", goods);
 		model.addAttribute("id", categoryId);
-		model.addAttribute("priceMap",priceMap);
+		model.addAttribute("priceMap", priceMap);
 		return new ModelAndView("category");
 	}
 }

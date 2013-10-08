@@ -1,66 +1,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<script src="<s:url value="/resources/js/jquery-1.9.1.min.js"/>"></script>
+	<script>
+		  $(document).ready(function(){
+				$('#login-trigger').click(function(){
+					$(this).next('#login-content').slideToggle();
+					$(this).toggleClass('active');					
+					
+					if ($(this).hasClass('active')) $(this).find('span').html('&#x25B2;')
+						else $(this).find('span').html('&#x25BC;')
+					})
+		  });
+	</script>
+<nav>
+	<ul>
+		<li id="login">
+			<a id="login-trigger" href="#">
+				Войти <span>&#x25BC;</span>
+			</a>
+			<div id="login-content">
+				<form action="signIn" method="post">
+					<fieldset id="inputs">
+						<input id="username" type="email" name="login">   
+						<input id="password" type="password" name="password">
+					</fieldset>
+					<fieldset id="actions">
+						<input type="submit" id="submit" value="Войти">
+						<label><input type="checkbox" checked="checked"> Запомнить меня</label>
+					</fieldset>
+				</form>
+			</div>                     
+		</li>
+		<li id="signup">
+			<a href="signup">Регистрация</a>
+		</li>
+	</ul>
+</nav>
 <div id="header">
 	<img src="<s:url value="/resources/img/logotip.png"/>" />
-	 <!-- Панель с кнопками -->
-            <div class="panel">
-                <a href="#login_form" id="login_pop">Войти</a>
-                <a href="#join_form" id="join_pop">Регистрация</a>
-                <a href="#" id="basket">Basket</a>
-            </div>
-
-        <!-- Форма №1 для модального окна -->
-        <form action="login" method="post">
-        <a href="#x" class="overlay" id="login_form"></a>
-        <div class="popup">
-            <h2>Здравствуй, Гость!</h2>
-            <p>Вводи свой псевдоним и пароль</p>
-            <div>
-                <label for="login">Псевдоним</label>
-                <input type="text" id="login" value="" />
-            </div>
-            <div>
-                <label for="password">Пароль</label>
-                <input type="password" id="password" value="" />
-            </div>
-            <input type="submit" value="Войти" />
-
-            <a class="close" href="#close"></a>
-        </div>
-        </form>
-
-        <!-- popup form #2 -->
-		<form:form action="login" method="post" modelAttribute="signupForm">
-        <a href="#x" class="overlay" id="join_form"></a>
-        <div class="popup">
-            <h2>Регистрация</h2>
-            <div>
-            	<form:errors path="username" />
-                <form:label path="username">Псевдоним</form:label>
-                <form:input path="username" id="email" value="" />
-            </div>
-            <div>
-                <form:label path="password">Пароль</form:label>
-                <form:input path="password" id="pass" value="" />
-            </div>
-            <div>
-                <form:label path="confirmPassword">Повторите пароль</form:label>
-                <form:input path="confirmPassword" id="pass" value="" />
-            </div>
-             <div>
-             	
-                <form:label path="email">Почта</form:label>
-                <form:input path="email" id="email" value="" />
-            </div>
-            
-            <input type="submit" value="Регистрация" />&nbsp;&nbsp;&nbsp;или&nbsp;&nbsp;&nbsp;<a href="#login_form" id="login_pop">Войти</a>
-
-            <a class="close" href="#close"></a>
-        </div>
-        </form:form>
 	<div id="tabs">
 		<ul>
 			<c:forEach var="category" items="${categorysList}">
