@@ -46,7 +46,9 @@ public class FullGoodServlet {
 		Price price = servicePrice.getMaxDatePriceByOneGood(goodId);
 		List<Category> categorysList = serviceCategory.getCategorys();
 		String longDesc = serviceGood.getLongDescription(goodId);
+		String manufactur = serviceGood.getManufactur(good.getManufacturers_id());
 		model.addAttribute("longDesc", longDesc);
+		model.addAttribute("manufactur", manufactur);
 		model.addAttribute(good);
 		model.addAttribute(price);
 		model.addAttribute("categorysList", categorysList);

@@ -21,6 +21,12 @@
 					</c:otherwise>
 				</c:choose></span><span id="code">Код товара: ${good.id}</span>
 		</div>
+		<div id="manufactur">
+			<span id="longDes">Производитель:</span>
+			<p>
+				<c:out value="${manufactur}" escapeXml="false" />
+			</p>
+		</div>
 		<div id="description">
 			<span id="longDes">Описание:</span>
 			<p>

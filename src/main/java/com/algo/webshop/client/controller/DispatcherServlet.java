@@ -111,7 +111,7 @@ public class DispatcherServlet {
 		List<Basket> basketList = new LinkedList<Basket>();
 		Basket basket = new Basket();
 		basket.setGoodId(goodId);
-		//basket.setNameGood(serviceGood.getGood(goodId).getName());
+		basket.setNameGood(serviceGood.getGood(goodId).getName());
 		basket.setValue(1);
 		basket.setPrice(servicePrice.getMaxDatePriceByOneGood(goodId).getValue());
 		try {
@@ -128,5 +128,32 @@ public class DispatcherServlet {
 	public ModelAndView basket(Model model,HttpSession session){
 		model.addAttribute("basketList", (LinkedList<Basket>) session.getAttribute("basketList"));
 		return new ModelAndView("basket");
+	}
+	
+	public void printList(LinkedList<Basket> basketList){
+		for(Basket basketInList: basketList){
+			System.out.println(basketInList.getNameGood());
+		}
+		
+	}
+	
+	@RequestMapping(value="/deletegood", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteGood(Model model,@RequestParam("goodId") int goodId,HttpSession session){
+		/*List<Basket> basketList = new LinkedList<Basket>();
+		basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
+		System.out.println("Print List to:");
+		printList((LinkedList<Basket>) basketList);
+		
+		for (Basket basketInSession : (LinkedList<Basket>) session.getAttribute("basketList")) {
+			if (basketInSession.getGoodId() == goodId){
+				basketList.remove(basketInSession);
+			}
+		}
+		System.out.println("Print List before:");
+		printList((LinkedList<Basket>) basketList);
+		session.setAttribute("basketList", basketList);
+		model.addAttribute("basketList", (LinkedList<Basket>) session.getAttribute("basketList"));*/
+		return new ResponseEntity<String>("basket", HttpStatus.CREATED);
+		//return new ModelAndView("basket");
 	}
 }
