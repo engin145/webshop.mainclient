@@ -137,11 +137,12 @@ public class DispatcherServlet {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/deletegood", method = RequestMethod.POST)
-	public ResponseEntity<String> deleteGood(Model model,@RequestParam("goodId") int goodId,HttpSession session){
-		/*List<Basket> basketList = new LinkedList<Basket>();
+	public ModelAndView deleteGood(Model model,@RequestParam("goodId") int goodId,HttpSession session){
+		List<Basket> basketList = new LinkedList<Basket>();
 		basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
-		System.out.println("Print List to:");
+		System.out.println("Print List before:");
 		printList((LinkedList<Basket>) basketList);
 		
 		for (Basket basketInSession : (LinkedList<Basket>) session.getAttribute("basketList")) {
@@ -149,11 +150,11 @@ public class DispatcherServlet {
 				basketList.remove(basketInSession);
 			}
 		}
-		System.out.println("Print List before:");
+		System.out.println("Print List after:");
 		printList((LinkedList<Basket>) basketList);
 		session.setAttribute("basketList", basketList);
-		model.addAttribute("basketList", (LinkedList<Basket>) session.getAttribute("basketList"));*/
-		return new ResponseEntity<String>("basket", HttpStatus.CREATED);
-		//return new ModelAndView("basket");
+		//model.addAttribute("basketList", basketList);
+		//return new ResponseEntity<String>("basket", HttpStatus.CREATED);
+		return new ModelAndView("redirect:basket");
 	}
 }

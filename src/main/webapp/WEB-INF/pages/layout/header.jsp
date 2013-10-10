@@ -40,7 +40,7 @@
 </nav>
 <div id="header">
 	<a href="#" onclick="parent.location='index'"><img src="<s:url value="/resources/img/logotip.png"/>" /></a>
-	<a href="#" onclick="parent.location='basket'">Basket</a>
+	<a href="#" onclick="parent.location='basket'">BasketB</a>
 	<div id="tabs">
 		<ul>
 			<c:forEach var="category" items="${categorysList}">
