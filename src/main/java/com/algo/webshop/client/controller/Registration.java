@@ -73,4 +73,12 @@ public class Registration {
 				"Вы ввели не правильный псевдоним или пароль");
 		return "error";
 	}
+	
+	@RequestMapping(value = "/leaveUser", method = RequestMethod.POST)
+	public String leaveUser(ModelMap model, HttpSession session) {
+		session.removeAttribute("login");
+		return "redirect:index";
+	}
+	
+	
 }
