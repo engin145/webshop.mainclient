@@ -113,6 +113,7 @@ input:focus,textarea:focus {
 }
 
 /*----------------------*/
+
 nav {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #444;
@@ -298,7 +299,6 @@ nav li #login-content {
 }
 
 #login label {
-	float: right;
 	line-height: 30px;
 }
 
@@ -313,4 +313,14 @@ nav ul {
 }
 nav {
 	margin: 10px;
+}
+
+#autorization {
+	width: 250px;
+	float: right;
+	padding: 10px;
+}
+
+#autorization input {
+	margin-left: 20px;
 }
