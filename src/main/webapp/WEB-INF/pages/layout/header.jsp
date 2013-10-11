@@ -16,14 +16,14 @@
 		})
 	});
 </script>
-	<c:choose>
-		<c:when test="${sessionScope.login==null}">
-			<c:import url="login.jsp" />
-		</c:when>
-		<c:otherwise>
-			<c:import url="exit.jsp" />
-		</c:otherwise>
-	</c:choose>
+<c:choose>
+	<c:when test="${sessionScope.login==null}">
+		<c:import url="login.jsp" />
+	</c:when>
+	<c:otherwise>
+		<c:import url="exit.jsp" />
+	</c:otherwise>
+</c:choose>
 <div id="header">
 	<a href="#" onclick="parent.location='index'"><img
 		src="<s:url value="/resources/img/logotip.png"/>" /></a> <a href="#"
