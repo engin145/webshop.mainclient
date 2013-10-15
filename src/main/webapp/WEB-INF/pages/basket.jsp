@@ -2,16 +2,14 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%-- <script type="text/javascript">
-function deleteGood(goodId) { 
-	var xmlhttp;
-	xmlhttp=new XMLHttpRequest();
-	xmlhttp.open("POST","deletegood",true);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("goodId="+goodId);
-	window.parent.location.reload();
+<script type="text/javascript">
+function upValue(goodId) { 
+	
 }
-</script> --%>
+function downValue(goodId) { 
+	
+}
+</script>
 
 <div id="content">
 	<div class="basket">
@@ -21,14 +19,26 @@ function deleteGood(goodId) {
 		<table border="1">
 			<c:forEach var="basket" items="${basketList}">
 				<tr>
-					<td>${basket.goodId}</td>
-					<td>${basket.nameGood}</td>
-					<td><input type="text" name="value" value="${basket.value}"></td>
-					<td>${basket.price} грн.</td>
+					<td rowspan="2">${basket.goodId}</td>
+					<td rowspan="2">${basket.nameGood}</td>
+					<td rowspan="2"><input type="text" name="value" value="${basket.value}"></td>
+					<td rowspan="2">${basket.price} грн.</td>
 					<td>
+						<form method="POST" action="#">
+							<input type="submit" value="/\"/>
+						</form>
+					</td>
+					<td rowspan="2">
 						<form method="POST" action="deletegood?goodId=${basket.goodId}">
 							<input type="submit" value="delete"/>
 						</form> 
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<form method="POST" action="#">
+							<input type="submit" value="\/"/>
+						</form>
 					</td>
 				</tr>
 			</c:forEach>

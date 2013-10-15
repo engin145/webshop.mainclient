@@ -127,32 +127,33 @@ public class DispatcherServlet {
 	@RequestMapping("/basket")
 	public ModelAndView basket(Model model,HttpSession session){
 		float sum=0;
-		model.addAttribute("basketList", (LinkedList<Basket>) session.getAttribute("basketList"));
-		for(Basket basket: (LinkedList<Basket>) session.getAttribute("basketList")){
+		List<Basket> basketList = new LinkedList<Basket>();
+		try {
+			basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		
+		for(Basket basket: basketList){
 			sum+=basket.getValue()*basket.getPrice();
 		}
+		
+		model.addAttribute("basketList", basketList);
 		model.addAttribute("sum", sum);
 		return new ModelAndView("basket");
 	}
 	
-	public void printList(LinkedList<Basket> basketList){
-		for(Basket basketInList: basketList){
-			System.out.println(basketInList.getNameGood());
-		}
-	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/deletegood", method = RequestMethod.POST)
 	public ModelAndView deleteGood(Model model,@RequestParam("goodId") int goodId,HttpSession session){
 		List<Basket> basketList = new LinkedList<Basket>();
 		basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
-		printList((LinkedList<Basket>) basketList);
 		for (Basket basketInSession : (LinkedList<Basket>) session.getAttribute("basketList")) {
 			if (basketInSession.getGoodId() == goodId){
 				basketList.remove(basketInSession);
 			}
 		}
-		printList((LinkedList<Basket>) basketList);
 		session.setAttribute("basketList", basketList);
 		return new ModelAndView("redirect:basket");
 	}
