@@ -24,6 +24,11 @@
 		<put-attribute name="content" value="/WEB-INF/pages/basket.jsp" />
 	</definition>
 	
+	<definition name="order" extends="baseLayout">
+		<put-attribute name="title" value="Order" />
+		<put-attribute name="content" value="/WEB-INF/pages/order.jsp" />
+	</definition>
+	
 	<definition name="fullgood" extends="baseLayout">
 		<put-attribute name="title" value="FullGood" />
 		<put-attribute name="content" value="/WEB-INF/pages/fullgood.jsp" />

@@ -15,6 +15,9 @@ function deleteGood(goodId) {
 
 <div id="content">
 	<div class="basket">
+		<c:if test="${basketList.isEmpty()==true}">
+			<p>Ваша корзина пуста</p>
+		</c:if>
 		<table border="1">
 			<c:forEach var="basket" items="${basketList}">
 				<tr>
@@ -30,5 +33,11 @@ function deleteGood(goodId) {
 				</tr>
 			</c:forEach>
 		</table>
+		<c:if test="${basketList.isEmpty()==false}">
+			<p>Сумма заказа: ${sum} грн.</p>
+			<form method="POST" action="order">
+				<input type="submit" value="Оформить заказ">
+			</form>
+		</c:if>
 	</div>
 </div>
