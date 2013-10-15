@@ -2,15 +2,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<script type="text/javascript">
-function upValue(goodId) { 
-	
-}
-function downValue(goodId) { 
-	
-}
-</script>
-
 <div id="content">
 	<div class="basket">
 		<c:if test="${basketList.isEmpty()==true}">
@@ -24,7 +15,7 @@ function downValue(goodId) {
 					<td rowspan="2"><input type="text" name="value" value="${basket.value}"></td>
 					<td rowspan="2">${basket.price} грн.</td>
 					<td>
-						<form method="POST" action="#">
+						<form method="POST" action="upvalue?goodId=${basket.goodId}">
 							<input type="submit" value="/\"/>
 						</form>
 					</td>
@@ -36,7 +27,7 @@ function downValue(goodId) {
 				</tr>
 				<tr>
 					<td>
-						<form method="POST" action="#">
+						<form method="POST" action="downvalue?goodId=${basket.goodId}">
 							<input type="submit" value="\/"/>
 						</form>
 					</td>

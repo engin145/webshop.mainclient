@@ -158,6 +158,37 @@ public class DispatcherServlet {
 		return new ModelAndView("redirect:basket");
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/upvalue", method = RequestMethod.POST)
+	public ModelAndView upValue(Model model,@RequestParam("goodId") int goodId,HttpSession session){
+		List<Basket> basketList = new LinkedList<Basket>();
+		basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
+		for (Basket basketInSession : (LinkedList<Basket>) session.getAttribute("basketList")) {
+			if (basketInSession.getGoodId() == goodId){
+				basketInSession.setValue(basketInSession.getValue()+1);
+			}
+		}
+		session.setAttribute("basketList", basketList);
+		return new ModelAndView("redirect:basket");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/downvalue", method = RequestMethod.POST)
+	public ModelAndView downValue(Model model,@RequestParam("goodId") int goodId,HttpSession session){
+		List<Basket> basketList = new LinkedList<Basket>();
+		basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
+		for (Basket basketInSession : (LinkedList<Basket>) session.getAttribute("basketList")) {
+			if (basketInSession.getGoodId() == goodId){
+				if(basketInSession.getValue()>1){
+					basketInSession.setValue(basketInSession.getValue()-1);
+				}
+				
+			}
+		}
+		session.setAttribute("basketList", basketList);
+		return new ModelAndView("redirect:basket");
+	}
+	
 	@RequestMapping(value="/order", method = RequestMethod.POST)
 	public ModelAndView order(Model model, HttpSession session){
 		
