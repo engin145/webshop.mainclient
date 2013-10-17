@@ -7,7 +7,7 @@
 	color: #ff0000;
 }
 #registration {
-	width: 600px;
+	width: 750px;
 }
 
 </style>
@@ -15,10 +15,10 @@
 	<div id="registration">
 		<h1>Регистрация</h1>
 		<form:form method="post" modelAttribute="signupForm">
-				<p>Псевдоним:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="login" /><span class="error">&nbsp&nbsp <form:errors path="login"/></span></p>
+				<p>Псевдоним:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="login" /><span class="error">&nbsp&nbsp ${loginUsed}<form:errors path="login"/></span></p>
 				<p>Имя:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="name" /><span class="error">&nbsp&nbsp <form:errors path="name"/></span></p>
-				<p>Пароль:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="password" /><span class="error">&nbsp&nbsp <form:errors path="password"/></span></p>
-				<p>Подтвердить пароль:&nbsp&nbsp<form:input path="confirmPassword" /><span class="error"> &nbsp&nbsp<form:errors path="confirmPassword"/></span></p>
+				<p>Пароль:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="password" type="password" /><span class="error">&nbsp&nbsp <form:errors path="password"/></span></p>
+				<p>Подтвердить пароль:&nbsp&nbsp<form:input path="confirmPassword" type="password" /><span class="error"> &nbsp&nbsp<form:errors path="confirmPassword" />${errorConfirmPass}</span></p>
 				<p>Телефон:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="phone" /><span class="error">&nbsp&nbsp <form:errors path="phone"/></span></p>
 				<p>Email:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<form:input path="email" /><span class="error">&nbsp&nbsp <form:errors path="email"/></span></p>
 				

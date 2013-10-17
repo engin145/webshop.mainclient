@@ -6,23 +6,23 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class SignupForm {
-	@Size(min = 3, max = 16, message = "name must be not least 3 char")
+	@Size(min = 3, max = 16, message = "Имя должно быть не меньше 3 символов")
 	private String name;
 
-	@Size(min = 3, max = 16, message = "password must be not least 3 char")
+	@Size(min = 3, max = 16, message = "Пароль должно быть не меньше 3 символов")
 	private String password;
 
-	@Size(min = 3, max = 16, message = "login must be not least 3 char")
+	@Size(min = 3, max = 16, message = "Псевдоним должно быть не меньше 3 символов")
 	private String login;
 
-	@Size(min = 3, max = 16, message = "password must be not least 3 char")
+	@Size(min = 3, max = 16, message = "Пароль должно быть не меньше 3 символов")
 	private String confirmPassword;
 
-	@Email(message="Your input not correct email")
-	@NotBlank(message="Your input not correct email")
+	@Email(message="Не коректнный E-mail адрес")
+	@NotBlank(message="Не коректнный E-mail адрес")
 	private String email;
 
-	@NotBlank
+	@NotBlank(message="Заполните поле")
 	private String phone;
 
 	public String getName() {

@@ -2,12 +2,14 @@ package com.algo.webshop.client.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,11 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.algo.webshop.client.authorization.OrderForm;
 import com.algo.webshop.common.domain.Basket;
 import com.algo.webshop.common.domain.Category;
 import com.algo.webshop.common.domain.Good;
@@ -94,10 +98,11 @@ public class DispatcherServlet {
 		model.addAttribute("priceMap", priceMap);
 		return new ModelAndView("category");
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/putinbasket", method = RequestMethod.POST)
-	public ResponseEntity<String> putInBasket(@RequestParam("goodId") int goodId,HttpSession session){
+	@RequestMapping(value = "/putinbasket", method = RequestMethod.POST)
+	public ResponseEntity<String> putInBasket(
+			@RequestParam("goodId") int goodId, HttpSession session) {
 		try {
 			for (Basket basketInSession : (LinkedList<Basket>) session
 					.getAttribute("basketList")) {
@@ -113,54 +118,105 @@ public class DispatcherServlet {
 		basket.setGoodId(goodId);
 		basket.setNameGood(serviceGood.getGood(goodId).getName());
 		basket.setValue(1);
-		basket.setPrice(servicePrice.getMaxDatePriceByOneGood(goodId).getValue());
+		basket.setPrice(servicePrice.getMaxDatePriceByOneGood(goodId)
+				.getValue());
 		try {
-			basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
+			basketList.addAll((LinkedList<Basket>) session
+					.getAttribute("basketList"));
 		} catch (Exception e) {
 		}
 		basketList.add(basket);
 		session.setAttribute("basketList", basketList);
 		return new ResponseEntity<String>("good", HttpStatus.CREATED);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/basket")
-	public ModelAndView basket(Model model,HttpSession session){
-		float sum=0;
+	public ModelAndView basket(Model model, HttpSession session) {
+		float sum = 0;
 		List<Basket> basketList = new LinkedList<Basket>();
 		try {
-			basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
+			basketList.addAll((LinkedList<Basket>) session
+					.getAttribute("basketList"));
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
-		
-		for(Basket basket: basketList){
-			sum+=basket.getValue()*basket.getPrice();
+
+		for (Basket basket : basketList) {
+			sum += basket.getValue() * basket.getPrice();
 		}
-		
+
 		model.addAttribute("basketList", basketList);
 		model.addAttribute("sum", sum);
 		return new ModelAndView("basket");
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/deletegood", method = RequestMethod.POST)
-	public ModelAndView deleteGood(Model model,@RequestParam("goodId") int goodId,HttpSession session){
+	@RequestMapping(value = "/deletegood", method = RequestMethod.POST)
+	public ModelAndView deleteGood(Model model,
+			@RequestParam("goodId") int goodId, HttpSession session) {
 		List<Basket> basketList = new LinkedList<Basket>();
-		basketList.addAll((LinkedList<Basket>) session.getAttribute("basketList"));
-		for (Basket basketInSession : (LinkedList<Basket>) session.getAttribute("basketList")) {
-			if (basketInSession.getGoodId() == goodId){
+		basketList.addAll((LinkedList<Basket>) session
+				.getAttribute("basketList"));
+		for (Basket basketInSession : (LinkedList<Basket>) session
+				.getAttribute("basketList")) {
+			if (basketInSession.getGoodId() == goodId) {
 				basketList.remove(basketInSession);
 			}
 		}
 		session.setAttribute("basketList", basketList);
 		return new ModelAndView("redirect:basket");
 	}
-	
-	@RequestMapping(value="/order", method = RequestMethod.POST)
-	public ModelAndView order(Model model, HttpSession session){
-		
+
+	@RequestMapping(value = "/order", method = RequestMethod.GET)
+	public ModelAndView order(Model model, HttpSession session) {
+		@SuppressWarnings("unchecked")
+		List<Basket> basketList = (List<Basket>) session
+				.getAttribute("basketList");
+		List<Basket> ItemsInStock = new LinkedList<Basket>();
+		List<Basket> noProductsInStock = new LinkedList<Basket>();
+		Iterator<Basket> iterator = basketList.iterator();
+		float sum = 0;
+		while (iterator.hasNext()) {
+			Basket element = iterator.next();
+			if (serviceGood.getGood(element.getGoodId()).getAmount() >= element
+					.getValue()) {
+				ItemsInStock.add(element);
+				sum +=element.getPrice();
+				continue;
+			}
+			noProductsInStock.add(element);
+		}
+		if (ItemsInStock.size() > 0) {
+			session.setAttribute("ItemsInStock", ItemsInStock);
+			session.setAttribute("sum", sum);
+		}
+		if (noProductsInStock.size() > 0) {
+			session.setAttribute("noProductsInStock", noProductsInStock);
+		}
+		String login = (String) session.getAttribute("login");
+		if (login == null) {
+			session.setAttribute("userData", "userData");
+			model.addAttribute("orderForm", new OrderForm());
+		} else {
+			session.setAttribute("userData", null);
+		}
+
 		return new ModelAndView("order");
+	}
+
+	@RequestMapping(value = "/order", method = RequestMethod.POST)
+	public String processSignup(@Valid final OrderForm orderForm,
+			final BindingResult result, Model model, HttpSession sesion) {
+		if (result.hasErrors()) {
+			return "order";
+		}
+		return "redirect:index";
+	}
+	
+	@RequestMapping(value = "/applayorder", method = RequestMethod.POST)
+	public String applayorder(Model model, HttpSession sesion) {
+		
+		return "redirect:index";
 	}
 }

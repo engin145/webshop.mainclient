@@ -2,6 +2,7 @@ package com.algo.webshop.client.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -47,9 +48,18 @@ public class Registration {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String processSignup(@Valid final SignupForm signupForm,
 			final BindingResult result, Model model, HttpSession sesion) {
-		if (result.hasErrors()
-				&& userService.getUserByLogin(signupForm.getLogin()) == null) {
-			return "signup";
+		String resultUrl = "signup";
+		if (result.hasErrors()) {
+			return resultUrl;
+		}
+		if (userService.getUserByLogin(signupForm.getLogin()) != null) {
+			model.addAttribute("loginUsed", "This login is used");
+			return resultUrl;
+		}
+		
+		if (!(signupForm.getPassword().equals(signupForm.getConfirmPassword()))) {
+			model.addAttribute("errorConfirmPass", "Пароли не совпадают!");
+			return resultUrl;
 		}
 		userService.addUserInDataBase(new User(signupForm.getName(), signupForm
 				.getEmail(), signupForm.getPhone(), signupForm.getLogin(),
@@ -62,7 +72,7 @@ public class Registration {
 
 	@RequestMapping(value = "/signIn", method = RequestMethod.POST)
 	public String signin(ModelMap model, @RequestParam("login") String login,
-			@RequestParam("password") String password, HttpSession sesion) {
+			@RequestParam("password") String password, HttpSession sesion, HttpServletRequest request) {
 		List<Category> categorysList = serviceCategory.getCategorys();
 		if (userService.getUserByLogPass(login, password) != null) {
 			sesion.setAttribute("login", login);
@@ -73,12 +83,11 @@ public class Registration {
 				"Вы ввели не правильный псевдоним или пароль");
 		return "error";
 	}
-	
+
 	@RequestMapping(value = "/leaveUser", method = RequestMethod.POST)
 	public String leaveUser(ModelMap model, HttpSession session) {
 		session.removeAttribute("login");
 		return "redirect:index";
 	}
-	
-	
+
 }

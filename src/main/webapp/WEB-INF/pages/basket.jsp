@@ -45,7 +45,7 @@ function downValue(goodId) {
 		</table>
 		<c:if test="${basketList.isEmpty()==false}">
 			<p>Сумма заказа: ${sum} грн.</p>
-			<form method="POST" action="order">
+			<form action="order">
 				<input type="submit" value="Оформить заказ">
 			</form>
 		</c:if>
