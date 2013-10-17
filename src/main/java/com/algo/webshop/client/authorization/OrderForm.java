@@ -6,12 +6,11 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class OrderForm {
-	@NotBlank(message = "Имя должно быть не меньше 3 символов")
 	@Size(min = 3, max = 16, message = "Имя должно быть не меньше 3 символов")
 	private String name;
 
 	@Email(message = "Не коректнный E-mail адрес")
-	@NotBlank(message = "Не коректнный E-mail адрес")
+	@NotBlank(message="Не коректнный E-mail адрес")
 	private String email;
 
 	@NotBlank(message="Заполните поле")

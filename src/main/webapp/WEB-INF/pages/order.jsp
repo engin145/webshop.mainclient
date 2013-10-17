@@ -69,9 +69,9 @@ table {
 				</tr>
 			</c:forEach>
 		</table>
-		<c:if test="${userData!=null}">
-			<div id="authentication">
-				<form:form modelAttribute="orderForm" method="post">
+		<form:form method="POST" modelAttribute="orderForm">
+			<c:if test="${userData!=null}">
+				<div id="authentication">
 					<table>
 						<tr>
 							<td>Имя:</td>
@@ -85,18 +85,16 @@ table {
 						</tr>
 						<tr>
 							<td>E-mail:</td>
-							<td><form:input path="email" class="error" /></td>
+							<td><form:input path="email" /></td>
 							<td><span class="error"><form:errors path="email" /></span></td>
 						</tr>
 					</table>
-				</form:form>
-			</div>
-		</c:if>
-		<form method="POST"
-			<c:if test="${userData==null}">action="applayorder"</c:if>>
-			<p>
-				<input type="submit" value="Подтверждаю заказ">
-			</p>
-		</form>
+					<p>
+						<input type="submit" value="Подтверждаю заказ">
+					</p>
+				</div>
+			</c:if>
+		</form:form>
+
 	</div>
 </div>
