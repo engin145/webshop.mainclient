@@ -1,3 +1,5 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -20,6 +22,12 @@ table {
 		<table border="1">
 			<c:if test="${ItemsInStock!=null}">
 				<p>Товары в наличии</p>
+				<tr>
+					<td>Код товара</td>
+					<td>Название</td>
+					<td>Количество</td>
+					<td>Цена</td>
+				</tr>
 			</c:if>
 			<c:forEach var="basket" items="${ItemsInStock}">
 				<tr>
@@ -34,13 +42,30 @@ table {
 		<table border="1">
 			<c:if test="${noProductsInStock!=null}">
 				<p>Товары которых нету в наличии</p>
+				<tr>
+					<td>Код товара</td>
+					<td>Название</td>
+					<td>Количество</td>
+					<td>Цена</td>
+					<td>На складе</td>
+				</tr>
 			</c:if>
+			<%
+				int i = 0;
+			%>
 			<c:forEach var="basket" items="${noProductsInStock}">
 				<tr>
 					<td>${basket.goodId}</td>
 					<td>${basket.nameGood}</td>
 					<td>${basket.value}</td>
 					<td>${basket.price}грн.</td>
+					<%
+						List<Double> data = (List<Double>) session
+									.getAttribute("amountProductsInStock");
+
+							out.println("<td>" + data.get(i) + "</td>");
+							i++;
+					%>
 				</tr>
 			</c:forEach>
 		</table>
@@ -67,7 +92,8 @@ table {
 				</form:form>
 			</div>
 		</c:if>
-		<form method="POST"<c:if test="${userData==null}">action="applayorder"</c:if>>
+		<form method="POST"
+			<c:if test="${userData==null}">action="applayorder"</c:if>>
 			<p>
 				<input type="submit" value="Подтверждаю заказ">
 			</p>

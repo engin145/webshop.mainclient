@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.algo.webshop.client.authorization.OrderForm;
+import com.algo.webshop.client.authorization.SignupForm;
 import com.algo.webshop.common.domain.Basket;
 import com.algo.webshop.common.domain.Category;
 import com.algo.webshop.common.domain.Good;
@@ -175,17 +177,21 @@ public class DispatcherServlet {
 				.getAttribute("basketList");
 		List<Basket> ItemsInStock = new LinkedList<Basket>();
 		List<Basket> noProductsInStock = new LinkedList<Basket>();
+		List<Double> amountProductsInStock = new LinkedList<Double>();
 		Iterator<Basket> iterator = basketList.iterator();
 		float sum = 0;
+		double amount;
 		while (iterator.hasNext()) {
 			Basket element = iterator.next();
-			if (serviceGood.getGood(element.getGoodId()).getAmount() >= element
+			amount = serviceGood.getGood(element.getGoodId()).getAmount();
+			if (amount >= element
 					.getValue()) {
 				ItemsInStock.add(element);
-				sum +=element.getPrice();
+				sum += element.getPrice();
 				continue;
 			}
 			noProductsInStock.add(element);
+			amountProductsInStock.add(amount);
 		}
 		if (ItemsInStock.size() > 0) {
 			session.setAttribute("ItemsInStock", ItemsInStock);
@@ -193,11 +199,13 @@ public class DispatcherServlet {
 		}
 		if (noProductsInStock.size() > 0) {
 			session.setAttribute("noProductsInStock", noProductsInStock);
+			session.setAttribute("amountProductsInStock", amountProductsInStock);
 		}
 		String login = (String) session.getAttribute("login");
 		if (login == null) {
 			session.setAttribute("userData", "userData");
-			model.addAttribute("orderForm", new OrderForm());
+			OrderForm orderForm = new OrderForm();
+			model.addAttribute("orderForm", orderForm);
 		} else {
 			session.setAttribute("userData", null);
 		}
@@ -213,10 +221,48 @@ public class DispatcherServlet {
 		}
 		return "redirect:index";
 	}
+
 	
+
 	@RequestMapping(value = "/applayorder", method = RequestMethod.POST)
 	public String applayorder(Model model, HttpSession sesion) {
-		
 		return "redirect:index";
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/upvalue", method = RequestMethod.POST)
+	public ModelAndView upValue(Model model,
+			@RequestParam("goodId") int goodId, HttpSession session) {
+		List<Basket> basketList = new LinkedList<Basket>();
+		basketList.addAll((LinkedList<Basket>) session
+				.getAttribute("basketList"));
+		for (Basket basketInSession : (LinkedList<Basket>) session
+				.getAttribute("basketList")) {
+			if (basketInSession.getGoodId() == goodId) {
+				basketInSession.setValue(basketInSession.getValue() + 1);
+			}
+		}
+		session.setAttribute("basketList", basketList);
+		return new ModelAndView("redirect:basket");
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/downvalue", method = RequestMethod.POST)
+	public ModelAndView downValue(Model model,
+			@RequestParam("goodId") int goodId, HttpSession session) {
+		List<Basket> basketList = new LinkedList<Basket>();
+		basketList.addAll((LinkedList<Basket>) session
+				.getAttribute("basketList"));
+		for (Basket basketInSession : (LinkedList<Basket>) session
+				.getAttribute("basketList")) {
+			if (basketInSession.getGoodId() == goodId) {
+				if (basketInSession.getValue() > 1) {
+					basketInSession.setValue(basketInSession.getValue() - 1);
+				}
+
+			}
+		}
+		session.setAttribute("basketList", basketList);
+		return new ModelAndView("redirect:basket");
 	}
 }
