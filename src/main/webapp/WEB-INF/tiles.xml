@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	<definition name="baseLayout" template="/WEB-INF/pages/layout/layout.jsp">
 		<put-attribute name="title" value="Spring 3 MVC &amp; Apache Tiles 2" />
@@ -13,36 +13,51 @@
 		<put-attribute name="title" value="Shop" />
 		<put-attribute name="content" value="/WEB-INF/pages/goods.jsp" />
 	</definition>
-	
+
 	<definition name="category" extends="baseLayout">
 		<put-attribute name="title" value="Categorys" />
 		<put-attribute name="content" value="/WEB-INF/pages/goods.jsp" />
 	</definition>
-	
+
 	<definition name="basket" extends="baseLayout">
 		<put-attribute name="title" value="Basket" />
 		<put-attribute name="content" value="/WEB-INF/pages/basket.jsp" />
+		<put-attribute name="style" value="basket.css" />
 	</definition>
-	
+
 	<definition name="order" extends="baseLayout">
 		<put-attribute name="title" value="Order" />
 		<put-attribute name="content" value="/WEB-INF/pages/order.jsp" />
+		<put-attribute name="style" value="basket.css" />
 	</definition>
-	
+
 	<definition name="fullgood" extends="baseLayout">
 		<put-attribute name="title" value="FullGood" />
 		<put-attribute name="content" value="/WEB-INF/pages/fullgood.jsp" />
 		<put-attribute name="style" value="fullGoodStyle.css" />
 	</definition>
-	
+
 	<definition name="signup" extends="baseLayout">
 		<put-attribute name="title" value="Регистрация" />
 		<put-attribute name="content" value="/WEB-INF/pages/signup.jsp" />
 		<put-attribute name="style" value="signup.css" />
 	</definition>
-	
+
 	<definition name="error" extends="baseLayout">
 		<put-attribute name="title" value="Ошибка регистрации" />
 		<put-attribute name="content" value="/WEB-INF/pages/error.jsp" />
+	</definition>
+
+	<definition name="orderSuccessfuly" extends="baseLayout">
+		<put-attribute name="title" value="Заказ успешно оформлен" />
+		<put-attribute name="content"
+			value="/WEB-INF/pages/orderSuccessfuly.jsp" />
+		<put-attribute name="style" value="basket.css" />
+	</definition>
+
+	<definition name="errorOrder" extends="baseLayout">
+		<put-attribute name="title" value="Ошибка заказа" />
+		<put-attribute name="content" value="/WEB-INF/pages/errorOrder.jsp" />
+		<put-attribute name="style" value="basket.css" />
 	</definition>
 </tiles-definitions>

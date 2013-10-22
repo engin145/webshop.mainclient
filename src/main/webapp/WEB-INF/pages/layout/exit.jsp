@@ -8,7 +8,7 @@
 			type : 'POST',
 			url : 'leaveUser',
 			success : function(data) {
-				 location.reload(true);
+				location.reload(true);
 			},
 		});
 

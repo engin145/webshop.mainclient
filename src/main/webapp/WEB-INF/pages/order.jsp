@@ -17,18 +17,16 @@ table {
 	border-collapse: collapse;
 }
 </style>
-<div id="content">
-	<div class="order">
+<div id="order">
+	<c:if test="${ItemsInStock!=null}">
 		<table border="1">
-			<c:if test="${ItemsInStock!=null}">
-				<p>Товары в наличии</p>
-				<tr>
-					<td>Код товара</td>
-					<td>Название</td>
-					<td>Количество</td>
-					<td>Цена</td>
-				</tr>
-			</c:if>
+			<p class="bold">Товары в наличии:</p>
+			<tr>
+				<td>Код товара</td>
+				<td>Название</td>
+				<td>Количество</td>
+				<td>Цена</td>
+			</tr>
 			<c:forEach var="basket" items="${ItemsInStock}">
 				<tr>
 					<td>${basket.goodId}</td>
@@ -38,39 +36,41 @@ table {
 				</tr>
 			</c:forEach>
 		</table>
-		<p>Сумма заказа: ${sum} грн.</p>
-		<table border="1">
-			<c:if test="${noProductsInStock!=null}">
-				<p>Товары которых нету в наличии</p>
-				<tr>
-					<td>Код товара</td>
-					<td>Название</td>
-					<td>Количество</td>
-					<td>Цена</td>
-					<td>На складе</td>
-				</tr>
-			</c:if>
-			<%
-				int i = 0;
-			%>
-			<c:forEach var="basket" items="${noProductsInStock}">
-				<tr>
-					<td>${basket.goodId}</td>
-					<td>${basket.nameGood}</td>
-					<td>${basket.value}</td>
-					<td>${basket.price}грн.</td>
-					<%
-						List<Double> data = (List<Double>) session
-									.getAttribute("amountProductsInStock");
+		<p class="bold">Сумма заказа: ${sum} грн.</p>
+	</c:if>
+	<table border="1">
+		<c:if test="${noProductsInStock!=null}">
+			<p class="bold">Товары которых нету в наличии:</p>
+			<tr>
+				<td>Код товара</td>
+				<td>Название</td>
+				<td>Количество</td>
+				<td>Цена</td>
+				<td>На складе</td>
+			</tr>
+		</c:if>
+		<%
+			int i = 0;
+		%>
+		<c:forEach var="basket" items="${noProductsInStock}">
+			<tr>
+				<td>${basket.goodId}</td>
+				<td>${basket.nameGood}</td>
+				<td>${basket.value}</td>
+				<td>${basket.price}грн.</td>
+				<%
+					List<Double> data = (List<Double>) session
+								.getAttribute("amountProductsInStock");
 
-							out.println("<td>" + data.get(i) + "</td>");
-							i++;
-					%>
-				</tr>
-			</c:forEach>
-		</table>
-		<form:form method="POST" modelAttribute="orderForm">
-			<c:if test="${userData!=null}">
+						out.println("<td>" + data.get(i) + "</td>");
+						i++;
+				%>
+			</tr>
+		</c:forEach>
+	</table>
+	<c:choose>
+		<c:when test="${userData!=null}">
+			<form:form method="POST" modelAttribute="orderForm">
 				<div id="authentication">
 					<table>
 						<tr>
@@ -93,8 +93,15 @@ table {
 						<input type="submit" value="Подтверждаю заказ">
 					</p>
 				</div>
-			</c:if>
-		</form:form>
-
-	</div>
+			</form:form>
+		</c:when>
+		<c:otherwise>
+			<form:form method="GET" modelAttribute="orderForm"
+				action="applayorder">
+				<p>
+					<input type="submit" value="Подтверждаю заказ">
+				</p>
+			</form:form>
+		</c:otherwise>
+	</c:choose>
 </div>

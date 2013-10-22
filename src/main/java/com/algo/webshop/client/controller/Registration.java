@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.algo.webshop.client.authorization.SignupForm;
 import com.algo.webshop.common.domain.Category;
@@ -40,6 +41,8 @@ public class Registration {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(ModelMap model) {
+		List<Category> categorysList = serviceCategory.getCategorys();
+		model.addAttribute("categorysList", categorysList);
 		SignupForm signupForm = new SignupForm();
 		model.put("signupForm", signupForm);
 		return "signup";
@@ -56,7 +59,7 @@ public class Registration {
 			model.addAttribute("loginUsed", "This login is used");
 			return resultUrl;
 		}
-		
+
 		if (!(signupForm.getPassword().equals(signupForm.getConfirmPassword()))) {
 			model.addAttribute("errorConfirmPass", "Пароли не совпадают!");
 			return resultUrl;
@@ -72,7 +75,8 @@ public class Registration {
 
 	@RequestMapping(value = "/signIn", method = RequestMethod.POST)
 	public String signin(ModelMap model, @RequestParam("login") String login,
-			@RequestParam("password") String password, HttpSession sesion, HttpServletRequest request) {
+			@RequestParam("password") String password, HttpSession sesion,
+			HttpServletRequest request) {
 		List<Category> categorysList = serviceCategory.getCategorys();
 		if (userService.getUserByLogPass(login, password) != null) {
 			sesion.setAttribute("login", login);
@@ -84,10 +88,10 @@ public class Registration {
 		return "error";
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/leaveUser", method = RequestMethod.POST)
-	public String leaveUser(ModelMap model, HttpSession session) {
+	public void leaveUser(ModelMap model, HttpSession session) {
 		session.removeAttribute("login");
-		return "redirect:index";
 	}
 
 }

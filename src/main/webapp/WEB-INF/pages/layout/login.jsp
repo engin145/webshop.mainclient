@@ -16,20 +16,22 @@
 	});
 </script>
 <nav>
-<form action="signIn" method="POST">
-	<ul>
-		<li id="login"><a href="#" id="login-trigger"> Войти <span>&#x25BC;</span>
-		</a>
-			<div id="login-content">
-				<fieldset id="inputs">
-					<input id="username" type="text" name="login"> <input
-						id="password" type="password" name="password">
-				</fieldset>
-				<fieldset id="actions">
-					<input type="submit" id="submit" value="Войти">
-				</fieldset>
-			</div></li>
-		<li id="signup"><a href="signup">Регистрация</a></li>
-	</ul>
+	<form action="signIn" method="POST">
+		<ul>
+			<li id="login"><a href="#" id="login-trigger"> Войти <span>&#x25BC;</span>
+			</a>
+				<div id="login-content">
+					<fieldset id="inputs">
+						<input id="username" type="text" name="login"> <input
+							id="password" type="password" name="password">
+					</fieldset>
+					<fieldset id="actions">
+						<input type="submit" id="submit" value="Войти"> <input
+							type="hidden" name="link"
+							value="${pageContext.request.requestURL}">
+					</fieldset>
+				</div></li>
+			<li id="signup"><a href="signup">Регистрация</a></li>
+		</ul>
 	</form>
 </nav>

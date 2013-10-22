@@ -113,7 +113,6 @@ input:focus,textarea:focus {
 }
 
 /*----------------------*/
-
 nav {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #444;
@@ -311,6 +310,7 @@ nav li #login-content {
 nav ul {
 	border: 1px solid #666666;
 }
+
 nav {
 	margin: 10px;
 }
@@ -323,4 +323,10 @@ nav {
 
 #autorization input {
 	margin-left: 20px;
+}
+
+#basketIcon {
+	position: relative;
+	left: 700;
+	bottom: 30;
 }

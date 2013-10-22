@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.algo.webshop.common.domain.Basket;
+import com.algo.webshop.common.domain.Category;
+import com.algo.webshop.common.domainimpl.ICategory;
 
 @Controller
 public class BasketServlet {
 
+	private ICategory serviceCategory;
+
+	@Autowired
+	public void setUserService(@Qualifier("categoryService") ICategory service) {
+		this.serviceCategory = service;
+	}
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/basket")
 	public ModelAndView basket(Model model, HttpSession session) {
+		List<Category> categorysList = serviceCategory.getCategorys();
+		model.addAttribute("categorysList", categorysList);
 		float sum = 0;
 		List<Basket> basketList = new LinkedList<Basket>();
 		try {
@@ -54,7 +67,7 @@ public class BasketServlet {
 		session.setAttribute("basketList", basketList);
 		return new ModelAndView("redirect:basket");
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/upvalue", method = RequestMethod.POST)
 	public ModelAndView upValue(Model model,

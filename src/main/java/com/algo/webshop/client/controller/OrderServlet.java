@@ -1,8 +1,12 @@
 package com.algo.webshop.client.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,21 +22,50 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.algo.webshop.client.authorization.OrderForm;
 import com.algo.webshop.common.domain.Basket;
+import com.algo.webshop.common.domain.Category;
+import com.algo.webshop.common.domain.GoodsList;
+import com.algo.webshop.common.domain.Order;
+import com.algo.webshop.common.domain.Position;
+import com.algo.webshop.common.domain.User;
+import com.algo.webshop.common.domainimpl.ICategory;
 import com.algo.webshop.common.domainimpl.IGood;
+import com.algo.webshop.common.domainimpl.IOrder;
+import com.algo.webshop.common.domainimpl.IUser;
 
 @Controller
 public class OrderServlet {
-	
+
 	private IGood serviceGood;
-	
+	private IOrder serviceOrder;
+	private IUser serviceUser;
+	private ICategory serviceCategory;
+
 	@Autowired
 	public void setUserService(@Qualifier("goodService") IGood service) {
 		this.serviceGood = service;
 	}
-	
+
+	@Autowired
+	public void setOrderService(@Qualifier("orderService") IOrder service) {
+		this.serviceOrder = service;
+	}
+
+	@Autowired
+	public void setUserService(@Qualifier("userService") IUser service) {
+		this.serviceUser = service;
+	}
+
+	@Autowired
+	public void setUserService(@Qualifier("categoryService") ICategory service) {
+		this.serviceCategory = service;
+	}
+
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
 	public ModelAndView order(Model model, HttpSession session) {
-		@SuppressWarnings("unchecked")
+		List<Category> categorysList = serviceCategory.getCategorys();
+		model.addAttribute("categorysList", categorysList);
+		removeSessionAttribute(session);
 		List<Basket> basketList = (List<Basket>) session
 				.getAttribute("basketList");
 		List<Basket> ItemsInStock = new LinkedList<Basket>();
@@ -44,10 +77,9 @@ public class OrderServlet {
 		while (iterator.hasNext()) {
 			Basket element = iterator.next();
 			amount = serviceGood.getGood(element.getGoodId()).getAmount();
-			if (amount >= element
-					.getValue()) {
+			if (amount >= element.getValue()) {
 				ItemsInStock.add(element);
-				sum += element.getPrice()*element.getValue();
+				sum += element.getPrice() * element.getValue();
 				continue;
 			}
 			noProductsInStock.add(element);
@@ -79,14 +111,98 @@ public class OrderServlet {
 		if (result.hasErrors()) {
 			return "order";
 		}
-		return "redirect:index";
+		sesion.setAttribute("orderForm", orderForm);
+		return "redirect:applayorder";
 	}
 
-	
-
-	@RequestMapping(value = "/applayorder", method = RequestMethod.POST)
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/applayorder", method = RequestMethod.GET)
 	public String applayorder(Model model, HttpSession sesion) {
-		return "redirect:index";
+		List<Category> categorysList = serviceCategory.getCategorys();
+		model.addAttribute("categorysList", categorysList);
+		List<Basket> goods = (List<Basket>) sesion.getAttribute("ItemsInStock");
+		Set<Position> setPosition = new HashSet<Position>();
+		if (goods == null) {
+			return "errorOrder";
+		}
+		for (Basket good : goods) {
+			setPosition.add(new Position(good.getGoodId(), good.getValue(),
+					good.getPrice()));
+		}
+		String login = (String) sesion.getAttribute("login");
+		User user = serviceUser.getUserByLogin(login);
+		GoodsList goodList = new GoodsList();
+		goodList.addPositions(setPosition);
+		Order order;
+		OrderForm orderForm = (OrderForm) sesion.getAttribute("orderForm");
+		if (sesion.getAttribute("login") == null) {
+			order = new Order(getOrderNumber(), orderForm.getPhone(),
+					orderForm.getEmail(), Calendar.getInstance(), goodList);
+		} else {
+			order = new Order(getOrderNumber(), user.getId(),
+					Calendar.getInstance(), goodList);
+		}
+		synchronized (serviceOrder) {
+			if (IsStockGoods(setPosition)) {
+				serviceOrder.addOrder(order);
+				sesion.removeAttribute("basketList");
+				List<Basket> basket = (List<Basket>) sesion
+						.getAttribute("noProductsInStock");
+				sesion.setAttribute("basketList", basket);
+				return "orderSuccessfuly";
+			}
+		}
+
+		return "errorOrder";
+	}
+
+	private String getOrderNumber() {
+		String numberOfOrder;
+		String number = serviceOrder.getLastOrderNumber();
+		String numberDate = number.substring(0, 8);
+		Calendar currentDate = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String time = formatter.format(currentDate.getTime());
+		String tmp[] = time.split("/");
+		String curentDate = tmp[0] + tmp[1] + tmp[2];
+		if (numberDate.equals(curentDate)) {
+			numberOfOrder = curentDate
+					+ Integer
+							.toString(Integer.parseInt(number.substring(8)) + 1);
+		} else {
+			numberOfOrder = curentDate + 1;
+		}
+		return numberOfOrder;
+	}
+
+	private boolean IsStockGoods(Set<Position> listGoods) {
+		double amount;
+		for (Position good : listGoods) {
+			amount = serviceGood.getGood(good.getGoods_id()).getAmount();
+			if (good.getAmount() > amount) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void removeSessionAttribute(HttpSession session) {
+		if (session.getAttribute("ItemsInStock") != null) {
+			session.removeAttribute("ItemsInStock");
+		}
+		if (session.getAttribute("noProductsInStock") != null) {
+			session.removeAttribute("noProductsInStock");
+		}
+		if (session.getAttribute("amountProductsInStock") != null) {
+			session.removeAttribute("amountProductsInStock");
+		}
+		if (session.getAttribute("userData") != null) {
+			session.removeAttribute("userData");
+		}
+
+		if (session.getAttribute("sum") != null) {
+			session.removeAttribute("sum");
+		}
 	}
 
 }
