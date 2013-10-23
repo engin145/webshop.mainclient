@@ -60,4 +60,16 @@
 		<put-attribute name="content" value="/WEB-INF/pages/errorOrder.jsp" />
 		<put-attribute name="style" value="basket.css" />
 	</definition>
+	
+	<definition name="errorFullGood" extends="baseLayout">
+		<put-attribute name="title" value="Товар не найден" />
+		<put-attribute name="content" value="/WEB-INF/pages/errorFullGood.jsp" />
+		<put-attribute name="style" value="basket.css" />
+	</definition>
+	
+	<definition name="errorCategory" extends="baseLayout">
+		<put-attribute name="title" value="Категория не найдена" />
+		<put-attribute name="content" value="/WEB-INF/pages/errorCategory.jsp" />
+		<put-attribute name="style" value="basket.css" />
+	</definition>
 </tiles-definitions>

@@ -82,13 +82,16 @@ public class DispatcherServlet {
 			@RequestParam("category") int categoryId) {
 		List<Good> goods = serviceGood.getGoods(categoryId);
 		List<Category> categorysList = serviceCategory.getCategorys();
+		model.addAttribute("categorysList", categorysList);
+		if (goods.size() == 0) {
+			return new ModelAndView("errorCategory");
+		}
 		List<Price> priceList = servicePrice
 				.getMaxDatePriceByOneCategory(categoryId);
 		Map<Integer, Float> priceMap = new HashMap<Integer, Float>();
 		for (Price price : priceList) {
 			priceMap.put(price.getGoodId(), price.getValue());
 		}
-		model.addAttribute("categorysList", categorysList);
 		model.addAttribute("goodList", goods);
 		model.addAttribute("id", categoryId);
 		model.addAttribute("priceMap", priceMap);
@@ -125,5 +128,5 @@ public class DispatcherServlet {
 		session.setAttribute("basketList", basketList);
 		return new ResponseEntity<String>("good", HttpStatus.CREATED);
 	}
-	
+
 }

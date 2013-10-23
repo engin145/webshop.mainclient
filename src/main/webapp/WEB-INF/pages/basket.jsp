@@ -1,8 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style type="text/css">
+td {
+	padding: 10px;
+}
 
-<div class="basket">
+table {
+	border-collapse: collapse;
+}
+</style>
+<div id="order">
 	<c:if test="${basketList.isEmpty()==true}">
 		<p>Ваша корзина пуста</p>
 	</c:if>

@@ -66,6 +66,9 @@ public class OrderServlet {
 		List<Category> categorysList = serviceCategory.getCategorys();
 		model.addAttribute("categorysList", categorysList);
 		removeSessionAttribute(session);
+		if (session.getAttribute("basketList") == null) {
+			return new ModelAndView("redirect:basket");
+		}
 		List<Basket> basketList = (List<Basket>) session
 				.getAttribute("basketList");
 		List<Basket> ItemsInStock = new LinkedList<Basket>();
@@ -118,6 +121,9 @@ public class OrderServlet {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/applayorder", method = RequestMethod.GET)
 	public String applayorder(Model model, HttpSession sesion) {
+		if (sesion.getAttribute("ItemsInStock") == null) {
+			return "redirect:index";
+		}
 		List<Category> categorysList = serviceCategory.getCategorys();
 		model.addAttribute("categorysList", categorysList);
 		List<Basket> goods = (List<Basket>) sesion.getAttribute("ItemsInStock");
@@ -149,6 +155,7 @@ public class OrderServlet {
 				List<Basket> basket = (List<Basket>) sesion
 						.getAttribute("noProductsInStock");
 				sesion.setAttribute("basketList", basket);
+				removeSessionAttribute(sesion);
 				return "orderSuccessfuly";
 			}
 		}

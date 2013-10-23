@@ -43,10 +43,14 @@ public class FullGoodServlet {
 	@RequestMapping(value = "/fullgood", method = RequestMethod.GET)
 	public ModelAndView header(Model model, @RequestParam("good") int goodId) {
 		Good good = serviceGood.getGood(goodId);
+		if (good == null) {
+			return new ModelAndView("errorFullGood");
+		}
 		Price price = servicePrice.getMaxDatePriceByOneGood(goodId);
 		List<Category> categorysList = serviceCategory.getCategorys();
 		String longDesc = serviceGood.getLongDescription(goodId);
-		String manufactur = serviceGood.getManufactur(good.getManufacturers_id());
+		String manufactur = serviceGood.getManufactur(good
+				.getManufacturers_id());
 		model.addAttribute("longDesc", longDesc);
 		model.addAttribute("manufactur", manufactur);
 		model.addAttribute(good);

@@ -70,38 +70,42 @@ table {
 	</table>
 	<c:choose>
 		<c:when test="${userData!=null}">
-			<form:form method="POST" modelAttribute="orderForm">
-				<div id="authentication">
-					<table>
-						<tr>
-							<td>Имя:</td>
-							<td><form:input path="name" /></td>
-							<td><span class="error"><form:errors path="name" /></span></td>
-						</tr>
-						<tr>
-							<td>Телефон:</td>
-							<td><form:input path="phone" /></td>
-							<td><span class="error"><form:errors path="phone" /></span></td>
-						</tr>
-						<tr>
-							<td>E-mail:</td>
-							<td><form:input path="email" /></td>
-							<td><span class="error"><form:errors path="email" /></span></td>
-						</tr>
-					</table>
+			<c:if test="${ItemsInStock!=null}">
+				<form:form method="POST" modelAttribute="orderForm">
+					<div id="authentication">
+						<table>
+							<tr>
+								<td>Имя:</td>
+								<td><form:input path="name" /></td>
+								<td><span class="error"><form:errors path="name" /></span></td>
+							</tr>
+							<tr>
+								<td>Телефон:</td>
+								<td><form:input path="phone" /></td>
+								<td><span class="error"><form:errors path="phone" /></span></td>
+							</tr>
+							<tr>
+								<td>E-mail:</td>
+								<td><form:input path="email" /></td>
+								<td><span class="error"><form:errors path="email" /></span></td>
+							</tr>
+						</table>
+						<p>
+							<input type="submit" value="Подтверждаю заказ">
+						</p>
+					</div>
+				</form:form>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${ItemsInStock!=null}">
+				<form:form method="GET" modelAttribute="orderForm"
+					action="applayorder">
 					<p>
 						<input type="submit" value="Подтверждаю заказ">
 					</p>
-				</div>
-			</form:form>
-		</c:when>
-		<c:otherwise>
-			<form:form method="GET" modelAttribute="orderForm"
-				action="applayorder">
-				<p>
-					<input type="submit" value="Подтверждаю заказ">
-				</p>
-			</form:form>
+				</form:form>
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 </div>
