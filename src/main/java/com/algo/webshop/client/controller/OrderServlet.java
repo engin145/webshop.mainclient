@@ -30,6 +30,7 @@ import com.algo.webshop.common.domain.User;
 import com.algo.webshop.common.domainimpl.ICategory;
 import com.algo.webshop.common.domainimpl.IGood;
 import com.algo.webshop.common.domainimpl.IOrder;
+import com.algo.webshop.common.domainimpl.IOrderGood;
 import com.algo.webshop.common.domainimpl.IUser;
 
 @Controller
@@ -39,6 +40,7 @@ public class OrderServlet {
 	private IOrder serviceOrder;
 	private IUser serviceUser;
 	private ICategory serviceCategory;
+	private IOrderGood serviceOrderGood;
 
 	@Autowired
 	public void setUserService(@Qualifier("goodService") IGood service) {
@@ -58,6 +60,12 @@ public class OrderServlet {
 	@Autowired
 	public void setUserService(@Qualifier("categoryService") ICategory service) {
 		this.serviceCategory = service;
+	}
+
+	@Autowired
+	public void setOrderGoodService(
+			@Qualifier("orderGoodService") IOrderGood service) {
+		this.serviceOrderGood = service;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -155,6 +163,11 @@ public class OrderServlet {
 		synchronized (serviceOrder) {
 			if (IsStockGoods(setPosition)) {
 				serviceOrder.addOrder(order);
+				int numberOfOrder = serviceOrder.getOrderIdByNumber(order
+						.getNumber());
+				serviceOrderGood
+						.addGoodList(order.getGoodList(), numberOfOrder);
+				serviceGood.updateAmount(order.getGoodList());
 				sesion.removeAttribute("basketList");
 				List<Basket> basket = (List<Basket>) sesion
 						.getAttribute("noProductsInStock");
