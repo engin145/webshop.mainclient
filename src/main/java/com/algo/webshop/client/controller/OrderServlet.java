@@ -66,11 +66,15 @@ public class OrderServlet {
 		List<Category> categorysList = serviceCategory.getCategorys();
 		model.addAttribute("categorysList", categorysList);
 		removeSessionAttribute(session);
-		if (session.getAttribute("basketList") == null) {
-			return new ModelAndView("redirect:basket");
-		}
 		List<Basket> basketList = (List<Basket>) session
 				.getAttribute("basketList");
+
+		if (basketList == null) {
+			return new ModelAndView("redirect:basket");
+		}
+		if (basketList.size() == 0) {
+			return new ModelAndView("redirect:basket");
+		}
 		List<Basket> ItemsInStock = new LinkedList<Basket>();
 		List<Basket> noProductsInStock = new LinkedList<Basket>();
 		List<Double> amountProductsInStock = new LinkedList<Double>();

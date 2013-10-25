@@ -9,13 +9,13 @@ public class SignupForm {
 	@Size(min = 3, max = 16, message = "Имя должно быть не меньше 3 символов")
 	private String name;
 
-	@Size(min = 3, max = 16, message = "Пароль должно быть не меньше 3 символов")
+	@Size(min = 3, max = 16, message = "Пароль должен быть не меньше 3 символов")
 	private String password;
 
-	@Size(min = 3, max = 16, message = "Псевдоним должно быть не меньше 3 символов")
+	@Size(min = 3, max = 16, message = "Псевдоним должен быть не меньше 3 символов")
 	private String login;
 
-	@Size(min = 3, max = 16, message = "Пароль должно быть не меньше 3 символов")
+	@Size(min = 3, max = 16, message = "Пароль должен быть не меньше 3 символов")
 	private String confirmPassword;
 
 	@Email(message="Не коректнный E-mail адрес")
